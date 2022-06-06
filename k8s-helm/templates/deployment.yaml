@@ -1,0 +1,72 @@
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: "todo-app-pvc"
+  labels:
+    app: todo-app
+spec:
+  # nfs-client class is created by the dynamic provisioner. Check name by running $ kubectl get sc
+  storageClassName: nfs-client
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Mi  # This can be any value as it is a required field. The PV will consume whatever the NFS export presents it.
+
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: todo-app-service
+  labels:
+    app: todo-app
+spec:
+  type: ClusterIP  # This is the default but is a good practice to define it.
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+  selector:
+    app: todo-app
+
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: todo-app
+  labels:
+    app: todo-app
+spec:
+  replicas: {{ .Values.number_of_replicas }}
+  selector:
+    matchLabels:
+      app: todo-app
+  strategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: todo-app
+    spec:
+      containers:
+      - image: {{ .Values.container_image }}
+        name: todo-app
+        env:
+        - name: TZ
+          value: {{ .Values.time_zone }}
+        # Mount the volume so the cert bot can auto renew TLS/SSL cert
+        volumeMounts:
+        - name: todo-app-volume
+          mountPath: "/var/www/html/.well-known/acme-challenge"
+        lifecycle:
+          postStart:
+            exec:
+              # Nginx uses /usr/share/nginx/html to serve traffic while the bot uses /var/www/html. This is a work around!
+              command: ["/bin/sh", "-c", "ln -s /var/www/html/.well-known /usr/share/nginx/html/.well-known"]
+      volumes:
+      - name: todo-app-volume
+        persistentVolumeClaim:
+          claimName: todo-app-pvc
