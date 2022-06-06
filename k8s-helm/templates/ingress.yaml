@@ -1,0 +1,25 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: todo-app-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+spec:
+  ingressClassName: nginx  # Must specify the ingress controller (no default set)
+  tls:
+  # Must be valid hosts in the secret
+  - hosts:
+     - {{ .Values.ingress_url }}
+    secretName: "{{ .Values.ingress_tls_secret_name }}"
+  rules:
+  - host: {{ .Values.ingress_url }}
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: todo-app-service
+            port:
+              number: 80

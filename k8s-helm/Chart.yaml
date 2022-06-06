@@ -1,0 +1,9 @@
+apiVersion: v2
+name: henrys-todo
+version: 0.1
+description: Personal todo project
+home: https://henry.lexdsolutions.com
+
+maintainers:
+  - name: Henry Dinh
+    email: henry.dinh@hotmail.com
