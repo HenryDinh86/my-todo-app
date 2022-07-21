@@ -37,13 +37,15 @@ const Create = () => {
     setTodos([...todos, { id: uuidv4(), item: todoInput, completed: false }]);
     setTodoInput('');
   };
-  const handleSave = (e) => {
+  const handleSave = async (e) => {
     e.preventDefault();
+
     if (title === '') {
       setTitleError(true);
     }
+
     if (title) {
-      addDoc(collectionRef, {
+      await addDoc(collectionRef, {
         title,
         items: todos,
         userId: user.uid,
