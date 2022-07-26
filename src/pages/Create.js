@@ -18,6 +18,8 @@ const Create = () => {
   const [title, setTitle] = useState('');
   const [todoInput, setTodoInput] = useState('');
   const [todos, setTodos] = useState([]);
+  const [titleError, setTitleError] = useState(false);
+
   const user = JSON.parse(localStorage.getItem('user'));
   // STYLES
   const style = {
@@ -35,15 +37,22 @@ const Create = () => {
     setTodos([...todos, { id: uuidv4(), item: todoInput, completed: false }]);
     setTodoInput('');
   };
-  const handleSave = (e) => {
+  const handleSave = async (e) => {
     e.preventDefault();
-    addDoc(collectionRef, {
-      title,
-      items: todos,
-      userId: user.uid,
-      createdAt: serverTimestamp()
-    });
-    navigate('/dashboard');
+
+    if (title === '') {
+      setTitleError(true);
+    }
+
+    if (title) {
+      await addDoc(collectionRef, {
+        title,
+        items: todos,
+        userId: user.uid,
+        createdAt: serverTimestamp()
+      });
+      navigate('/dashboard');
+    }
   };
 
   return (
@@ -65,6 +74,8 @@ const Create = () => {
         autoComplete='off'
       >
         <TextField
+          required
+          error={titleError}
           sx={{ minWidth: '40%' }}
           onChange={handleTitleChange}
           fullWidth
@@ -83,6 +94,7 @@ const Create = () => {
         onSubmit={handleSubmit}
       >
         <TextField
+          required
           value={todoInput}
           onChange={handleTodoChange}
           fullWidth
