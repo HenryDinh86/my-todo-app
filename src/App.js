@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import LandingPage from './components/LandingPage';
 import Dashboard from './pages/Dashboard';
 import Create from './pages/Create';
+import Checklist from './pages/Checklist';
 import Edit from './pages/Edit';
 import NotFound from './pages/NotFound';
 import ResponsiveDrawer from './components/ResponsiveDrawer';
@@ -19,6 +20,7 @@ function App() {
             <Route path='/dashboard' element={<Dashboard />} />
             <Route path='/create' element={<Create />} />
             <Route path='/edit/:id' element={<Edit />} />
+            <Route path='/checklist/:id' element={<Checklist />} />
           </Route>
         </Route>
       </Routes>

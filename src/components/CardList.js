@@ -23,7 +23,7 @@ const CardList = ({ todos }) => {
     await deleteDoc(docRef);
   };
   const handleRedirect = (id) => {
-    navigate(`/edit/${id}`);
+    navigate(`/checklist/${id}`);
   };
 
   return (

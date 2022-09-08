@@ -5,7 +5,7 @@ import { useMediaQueries } from '../helpers/useMediaQueries';
 
 const Todo = ({ setTodos, todo, todos, id }) => {
   const isMatched = useMediaQueries('sm');
-  const path = `/edit/${id}`;
+  const path = `/checklist/${id}`;
   const location = useLocation();
 
   const deleteHandler = () => {
