@@ -27,32 +27,30 @@ const Create = () => {
   };
   // FUNCTIONS
   const handleTitleChange = (e) => {
+    setTitleError(false);
     setTitle(e.target.value);
   };
   const handleTodoChange = (e) => {
     setTodoInput(e.target.value);
   };
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setTodos([...todos, { id: uuidv4(), item: todoInput, completed: false }]);
-    setTodoInput('');
-  };
-  const handleSave = async (e) => {
+  const handleAddTodos = (e) => {
     e.preventDefault();
 
     if (title === '') {
       setTitleError(true);
     }
 
-    if (title) {
-      await addDoc(collectionRef, {
-        title,
-        items: todos,
-        userId: user.uid,
-        createdAt: serverTimestamp()
-      });
-      navigate('/dashboard');
-    }
+    setTodos([...todos, { id: uuidv4(), item: todoInput, completed: false }]);
+    setTodoInput('');
+  };
+  const handleSave = async () => {
+    await addDoc(collectionRef, {
+      title,
+      items: todos,
+      userId: user.uid,
+      createdAt: serverTimestamp()
+    });
+    navigate('/dashboard');
   };
 
   return (
@@ -91,7 +89,7 @@ const Create = () => {
         component='form'
         noValidate
         autoComplete='off'
-        onSubmit={handleSubmit}
+        onSubmit={handleAddTodos}
       >
         <TextField
           required
@@ -101,14 +99,18 @@ const Create = () => {
           label='Todo'
           size={isMatched && 'small'}
         />
-        <Button
-          disableElevation
-          onClick={handleSubmit}
-          sx={{ ml: '10px' }}
-          variant='contained'
-        >
-          <AddCircleOutline />
-        </Button>
+        {todoInput === '' ? (
+          <Button sx={{ ml: '10px' }} disabled />
+        ) : (
+          <Button
+            disableElevation
+            onClick={handleAddTodos}
+            sx={{ ml: '10px' }}
+            variant='contained'
+          >
+            <AddCircleOutline />
+          </Button>
+        )}
       </Box>
       <TodoList setTodos={setTodos} todos={todos} />
 
