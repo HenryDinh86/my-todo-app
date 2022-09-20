@@ -32,6 +32,9 @@ jobs:
         id: buildx
         uses: docker/setup-buildx-action@v1
 
+      - name: Create version.txt
+        run: echo '${{ github.event.ref }}' > ./version.txt
+
       - name: Create the .env-cmdrc.json from secret
         run: echo '${{ secrets.ENV_CMDRC }}' > ./.env-cmdrc.json
 

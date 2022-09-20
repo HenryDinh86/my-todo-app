@@ -35,6 +35,9 @@ FROM nginx:1.20
 # copy the compliled frontend code from builder into nginx container
 COPY --from=builder /frontend/build /usr/share/nginx/html
 
+# copy version.txt from frontend stage
+COPY --from=builder /frontend/version.txt /usr/share/nginx/html/version.txt
+
 # copy the self signed key and certificate from builder into nginx container
 COPY --from=builder /frontend/nginx_selfsigned.key /etc/nginx/certs/nginx_selfsigned.key
 COPY --from=builder /frontend/nginx_selfsigned.crt /etc/nginx/certs/nginx_selfsigned.crt
