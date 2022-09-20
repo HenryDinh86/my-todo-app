@@ -67,7 +67,7 @@ const Create = () => {
       </Typography>
 
       <Box
-        sx={{ display: 'flex', mb: '20px' }}
+        sx={{ display: 'flex', mb: '15px' }}
         component='form'
         noValidate
         autoComplete='off'
@@ -75,7 +75,6 @@ const Create = () => {
         <TextField
           required
           error={titleError}
-          sx={{ minWidth: '40%' }}
           onChange={handleTitleChange}
           fullWidth
           label='Todo Title'
@@ -85,7 +84,8 @@ const Create = () => {
       </Box>
       <Box
         sx={{
-          display: 'flex'
+          display: 'flex',
+          mb: '15px'
         }}
         component='form'
         noValidate
@@ -93,6 +93,7 @@ const Create = () => {
         onSubmit={handleAddTodos}
       >
         <TextField
+          // sx={{ mb: '10px' }}
           required
           value={todoInput}
           onChange={handleTodoChange}
@@ -118,6 +119,7 @@ const Create = () => {
       {todos.length >= 1 && (
         <Box sx={{ display: 'flex', justifyContent: 'center', mt: '10px' }}>
           <Button
+            sx={{ mb: '20px' }}
             size={isMatched ? 'small' : 'medium'}
             color='info'
             onClick={handleSave}
