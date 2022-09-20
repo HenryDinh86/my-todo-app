@@ -49,8 +49,11 @@ body {
 }
 
 .todo-item {
-  padding: 0.3rem 0;
+  padding: 0.5rem 0;
   padding-left: 0.6rem;
+}
+[contenteditable] {
+  outline: none;
 }
 
 .todo {
@@ -64,8 +67,6 @@ body {
 }
 
 .todo-list {
-  /* min-width: 40%; */
-  width: 100%;
   list-style: none;
 }
 .trash-btn,
@@ -87,7 +88,7 @@ body {
 
 @media screen and (max-width: 600px) {
   .todo-item {
-    padding: 0.35rem 0;
+    padding: 0.2rem 0;
     padding-left: 0.6rem;
   }
 }

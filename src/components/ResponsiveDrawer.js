@@ -116,7 +116,7 @@ const ResponsiveDrawer = ({ children }) => {
             <MenuIcon />
           </IconButton>
           <Typography sx={isMatched ? { display: 'none' } : { flexGrow: 1 }}>
-            Today is the {format(new Date(), 'do MMMM Y')}
+            {format(new Date(), 'do MMMM Y')}
           </Typography>
           <Typography sx={isMatched ? { display: 'none' } : ''}>
             Welcome, {capitaliseUsername()}

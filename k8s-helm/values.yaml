@@ -2,7 +2,7 @@
 time_zone: Australia/Sydney
 
 number_of_replicas: 1
-container_image: henrydinh/todo-app:0.2
+container_image: henrydinh/todo-app:0.3
 ingress_url: henry.lexdsolutions.com
 ingress_tls_secret_name: henry.lexdsolutions.com.tls
 

@@ -7,6 +7,7 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+
 import { CardActionArea, Container, Grid } from '@mui/material';
 import { useMediaQueries } from '../helpers/useMediaQueries';
 
@@ -14,16 +15,15 @@ const CardList = ({ todos }) => {
   const isMatched = useMediaQueries('sm');
   const navigate = useNavigate();
 
-  // console.log(format(new Date(), 'EEEE, do MMMM Y'));
   const deleteHandler = async (e, id) => {
-    /**  Stop Ripple Effect */
+    /**  Stop Ripple Effect. Stop the inner event listener from firing */
     e.stopPropagation();
     /**  */
     const docRef = doc(db, 'todos', id);
     await deleteDoc(docRef);
   };
   const handleRedirect = (id) => {
-    navigate(`/edit/${id}`);
+    navigate(`/checklist/${id}`);
   };
 
   return (
