@@ -52,7 +52,7 @@ spec:
         app: todo-app
     spec:
       containers:
-      - image: {{ .Values.container_image }}
+      - image: "{{ .Values.container_image }}:{{ .Values.container_image_tag }}"
         name: todo-app
         env:
         - name: TZ
