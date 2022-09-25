@@ -56,6 +56,7 @@ jobs:
       - name: zip k8s-helm directory
         run: |
           cd ./k8s-helm/
+          sed -i "s/_VERSION_TAG_FROM_CI_/${{ github.event.ref }}/g" values.yaml
           zip -r henry_todo_app.zip .
 
       - name: Custom docker container action to push object to S3
