@@ -57,16 +57,3 @@ spec:
         env:
         - name: TZ
           value: {{ .Values.time_zone }}
-        # Mount the volume so the cert bot can auto renew TLS/SSL cert
-        volumeMounts:
-        - name: todo-app-volume
-          mountPath: "/var/www/html/.well-known/acme-challenge"
-        lifecycle:
-          postStart:
-            exec:
-              # Nginx uses /usr/share/nginx/html to serve traffic while the bot uses /var/www/html. This is a work around!
-              command: ["/bin/sh", "-c", "ln -s /var/www/html/.well-known /usr/share/nginx/html/.well-known"]
-      volumes:
-      - name: todo-app-volume
-        persistentVolumeClaim:
-          claimName: todo-app-pvc

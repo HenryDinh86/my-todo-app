@@ -3,11 +3,7 @@
 ## Deploy Helm
 Deploy Helm
 ```
-# First install
-$ helm install todo-app -n prod .
-
-# Upgrades
-$ helm upgrade -n prod todo-app .
+$ helm upgrade --install todo-app -n prod .
 ```
 
 Remove Helm
