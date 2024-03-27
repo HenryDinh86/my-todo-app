@@ -7,11 +7,6 @@ metadata:
     nginx.ingress.kubernetes.io/ssl-redirect: "false"
 spec:
   ingressClassName: nginx  # Must specify the ingress controller (no default set)
-  tls:
-  # Must be valid hosts in the secret
-  - hosts:
-     - {{ .Values.ingress_url }}
-    secretName: "{{ .Values.ingress_tls_secret_name }}"
   rules:
   - host: {{ .Values.ingress_url }}
     http:
